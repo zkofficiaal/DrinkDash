@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct DrinkDashApp: App {
+    
+    @State private var router = AppRouter()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRouterView()
+                .environment(router)
         }
     }
 }
