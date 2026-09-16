@@ -1,0 +1,79 @@
+//
+//  ProductCarouselView.swift
+//  DrinkDash
+//
+//  Created by Z.K   on 16/09/2026.
+//
+
+import SwiftUI
+
+// MARK: - Product Carousel View
+
+struct ProductCarouselView: View {
+
+    @Bindable var viewModel: HomeViewModel
+
+    let screenSize: CGSize
+
+    let onProductSelected: (Product) -> Void
+
+    @State private var dragOffset: CGFloat = 0
+
+    var body: some View {
+
+        let product = viewModel.selectedProduct
+
+        ZStack {
+
+            if let product {
+                ProductHeroView(
+                    product: product,
+                    screenSize: screenSize,
+                    dragOffset: dragOffset
+                ) {
+                    onProductSelected(product)
+                }
+            }
+        }
+        .contentShape(Rectangle())
+        .gesture(
+            dragGesture
+        )
+    }
+
+    private var dragGesture: some Gesture {
+
+        DragGesture(
+            minimumDistance: 10
+        )
+        .onChanged { value in
+
+            dragOffset = value.translation.width
+        }
+        .onEnded { value in
+
+            let threshold = screenSize.width * 0.20
+
+            if value.translation.width < -threshold {
+
+                withAnimation(AppMotion.carousel) {
+                    viewModel.moveToNext()
+                    dragOffset = 0
+                }
+
+            } else if value.translation.width > threshold {
+
+                withAnimation(AppMotion.carousel) {
+                    viewModel.moveToPrevious()
+                    dragOffset = 0
+                }
+
+            } else {
+
+                withAnimation(AppMotion.carousel) {
+                    dragOffset = 0
+                }
+            }
+        }
+    }
+}
