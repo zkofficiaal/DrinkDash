@@ -14,7 +14,6 @@ struct ProductCarouselView: View {
     @Bindable var viewModel: HomeViewModel
 
     let screenSize: CGSize
-
     let onProductSelected: (Product) -> Void
 
     @State private var dragOffset: CGFloat = 0
@@ -28,7 +27,8 @@ struct ProductCarouselView: View {
             if let product {
 
                 let nextIndex =
-                    (viewModel.selectedIndex + 1) % viewModel.products.count
+                    (viewModel.selectedIndex + 1)
+                    % viewModel.products.count
 
                 let nextProduct =
                     viewModel.products[nextIndex]
@@ -39,51 +39,34 @@ struct ProductCarouselView: View {
                     screenSize: screenSize,
                     dragOffset: dragOffset
                 ) {
-
                     onProductSelected(product)
-                }
-            }
-        }
-        .contentShape(Rectangle())
-        .gesture(
-            dragGesture
-        )
-    }
+                } onDrag: { value in
+                    dragOffset = value.translation.width
+                } onDragEnded: { value in
 
-    private var dragGesture: some Gesture {
+                    let threshold =
+                        screenSize.width * 0.20
 
-        DragGesture(
-            minimumDistance: 10
-        )
-        .onChanged { value in
+                    if value.translation.width < -threshold {
 
-            dragOffset = value.translation.width
-        }
-        .onEnded { value in
+                        withAnimation(AppMotion.carousel) {
+                            viewModel.moveToNext()
+                            dragOffset = 0
+                        }
 
-            let threshold = screenSize.width * 0.20
+                    } else if value.translation.width > threshold {
 
-            if value.translation.width < -threshold {
+                        withAnimation(AppMotion.carousel) {
+                            viewModel.moveToPrevious()
+                            dragOffset = 0
+                        }
 
-                withAnimation(AppMotion.carousel) {
+                    } else {
 
-                    viewModel.moveToNext()
-                    dragOffset = 0
-                }
-
-            } else if value.translation.width > threshold {
-
-                withAnimation(AppMotion.carousel) {
-
-                    viewModel.moveToPrevious()
-                    dragOffset = 0
-                }
-
-            } else {
-
-                withAnimation(AppMotion.carousel) {
-
-                    dragOffset = 0
+                        withAnimation(AppMotion.carousel) {
+                            dragOffset = 0
+                        }
+                    }
                 }
             }
         }

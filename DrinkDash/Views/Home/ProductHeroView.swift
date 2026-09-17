@@ -16,6 +16,8 @@ struct ProductHeroView: View {
     let screenSize: CGSize
     let dragOffset: CGFloat
     let onSelect: () -> Void
+    let onDrag: (DragGesture.Value) -> Void
+    let onDragEnded: (DragGesture.Value) -> Void
 
     var body: some View {
 
@@ -33,6 +35,12 @@ struct ProductHeroView: View {
                     .frame(
                         width: geometry.size.width,
                         height: geometry.size.height * 0.55
+                    )
+                    .contentShape(Rectangle())
+                    .gesture(
+                        DragGesture(minimumDistance: 10)
+                            .onChanged(onDrag)
+                            .onEnded(onDragEnded)
                     )
 
                 bottomContent
@@ -119,8 +127,6 @@ struct ProductHeroView: View {
                     .foregroundStyle(
                         AppColors.primaryText
                     )
-                
-               // Spacer()
                     .padding(5)
 
                 Text(product.subtitle)
@@ -134,30 +140,19 @@ struct ProductHeroView: View {
                     prefix: "$"
                 )
             }
+            .padding(20)
 
-                .padding(15)
-            
             Button(action: onSelect) {
 
                 Text(product.promotionalText)
                     .font(AppTypography.sectionLabel)
-                    .foregroundStyle(
-                        AppColors.primaryText
-                    )
-                    .padding(
-                        .horizontal,
-                        16
-                    )
-                    .padding(
-                        .vertical,
-                        10
-                    )
+                    .foregroundStyle(AppColors.primaryText)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 13)
                     .background(
-                        .white.opacity(0.45)
+                        .white.opacity(0.75)
                     )
-                    .clipShape(
-                        Capsule()
-                    )
+                    .clipShape(Capsule())
             }
             .buttonStyle(.plain)
         }
