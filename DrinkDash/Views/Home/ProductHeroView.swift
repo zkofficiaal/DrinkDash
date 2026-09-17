@@ -36,7 +36,7 @@ struct ProductHeroView: View {
             bottomContent
         }
         .padding(.horizontal, AppSpacing.horizontal)
-        .padding(.top, AppSpacing.heroTop)
+        .padding(.top, AppSpacing.logoTop)
         .padding(.bottom, AppSpacing.bottomButton)
     }
 
@@ -57,14 +57,6 @@ struct ProductHeroView: View {
         Button(action: onSelect) {
 
             ZStack {
-
-                Circle()
-                    .fill(.white.opacity(0.35))
-                    .frame(
-                        width: 58,
-                        height: 58
-                    )
-
                 ProductImageView(
                     product: nextProduct
                 )
@@ -104,7 +96,7 @@ struct ProductHeroView: View {
     private var bottomContent: some View {
 
         VStack(
-            alignment: .leading,
+            alignment: .center,
             spacing: AppSpacing.medium
         ) {
 
@@ -113,7 +105,7 @@ struct ProductHeroView: View {
             ) {
 
                 VStack(
-                    alignment: .leading,
+                    alignment: .center,
                     spacing: 4
                 ) {
 
@@ -135,7 +127,7 @@ struct ProductHeroView: View {
                     )
                 }
 
-                Spacer()
+               // Spacer()
             }
 
             Button(action: onSelect) {
