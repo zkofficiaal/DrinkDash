@@ -18,48 +18,52 @@ struct ReceiptView: View {
     var body: some View {
 
         GeometryReader { geometry in
-
-            ZStack {
-
-                ReceiptShape(
-                    toothWidth: 12,
-                    toothHeight: 8
-                )
-                .fill(
-                    AppColors.receiptPaper
-                )
-                .frame(
-                    width: min(
-                        geometry.size.width * 0.72,
-                        320
-                    ),
-                    height: min(
-                        geometry.size.height * 0.70,
-                        560
+            VStack{
+                
+                
+                
+                ZStack {
+                    
+                    ReceiptShape(
+                        toothWidth: 12,
+                        toothHeight: 8
                     )
+                    .fill(
+                        AppColors.receiptPaper
+                    )
+                    .frame(
+                        width: min(
+                            geometry.size.width * 0.72,
+                            320
+                        ),
+                        height: min(
+                            geometry.size.height * 0.70,
+                            560
+                        )
+                    )
+                    .shadow(
+                        color: .black.opacity(0.25),
+                        radius: 20,
+                        y: 10
+                    )
+                    .scaleEffect(
+                        viewModel.isReceiptVisible
+                        ? 1
+                        : 0.8
+                    )
+                    .opacity(
+                        viewModel.isReceiptVisible
+                        ? 1
+                        : 0
+                    )
+                    
+                    receiptContent
+                }
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity
                 )
-                .shadow(
-                    color: .black.opacity(0.25),
-                    radius: 20,
-                    y: 10
-                )
-                .scaleEffect(
-                    viewModel.isReceiptVisible
-                    ? 1
-                    : 0.8
-                )
-                .opacity(
-                    viewModel.isReceiptVisible
-                    ? 1
-                    : 0
-                )
-
-                receiptContent
             }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
         }
     }
 
@@ -95,6 +99,8 @@ struct ReceiptView: View {
             )
 
             if viewModel.isProductVisible {
+                
+               // Text("DevTechZahid")
 
                 Text(order.item.product.name)
                     .font(AppTypography.receiptTitle)
@@ -176,6 +182,13 @@ struct ReceiptView: View {
                     .foregroundStyle(
                         AppColors.primaryText
                     )
+                    .padding(12)
+                    
+                    Text("Developed by:")
+                        .font(AppTypography.subtitle)
+                    
+                    Text("DevTechZahid")
+                        .font(AppTypography.devtechzahidTitle)
                 }
                 .transition(
                     .scale.combined(

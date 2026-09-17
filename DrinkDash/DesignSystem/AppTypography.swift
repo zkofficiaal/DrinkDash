@@ -20,6 +20,12 @@ enum AppTypography {
         weight: .medium,
         design: .serif
     )
+    
+    static let devtechzahidTitle = Font.system(
+        size: 20,
+        weight: .medium,
+        design: .serif
+    )
 
     static let productTitle = Font.system(
         size: 34,
