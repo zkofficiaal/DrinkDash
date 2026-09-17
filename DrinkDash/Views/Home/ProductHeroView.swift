@@ -38,7 +38,8 @@ struct ProductHeroView: View {
             bottomContent
         }
         .padding(.horizontal, AppSpacing.horizontal)
-        .padding(.top, AppSpacing.heroTop)
+        //.padding(.top, AppSpacing.heroTop)
+        .padding(.top, 6)
         .padding(.bottom, AppSpacing.bottomButton)
     }
 
