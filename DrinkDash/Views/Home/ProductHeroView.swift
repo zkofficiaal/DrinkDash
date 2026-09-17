@@ -19,21 +19,29 @@ struct ProductHeroView: View {
 
     var body: some View {
 
-        VStack(spacing: 0) {
+        GeometryReader { geometry in
 
-            header
+            VStack(spacing: 0) {
 
-            Spacer(
-                minLength: 0
-            )
+                header
+                    .frame(
+                        height: geometry.size.height * 0.15,
+                        alignment: .top
+                    )
 
-            heroImage
+                heroImage
+                    .frame(
+                        width: geometry.size.width,
+                        height: geometry.size.height * 0.55
+                    )
 
-            Spacer(
-                minLength: 0
-            )
-
-            bottomContent
+                bottomContent
+                    .frame(
+                        width: geometry.size.width,
+                        height: geometry.size.height * 0.30,
+                        alignment: .top
+                    )
+            }
         }
         .padding(.horizontal, AppSpacing.horizontal)
         .padding(.top, AppSpacing.logoTop)
@@ -57,6 +65,7 @@ struct ProductHeroView: View {
         Button(action: onSelect) {
 
             ZStack {
+
                 ProductImageView(
                     product: nextProduct
                 )
@@ -100,36 +109,34 @@ struct ProductHeroView: View {
             spacing: AppSpacing.medium
         ) {
 
-            HStack(
-                alignment: .bottom
+            VStack(
+                alignment: .center,
+                spacing: 4
             ) {
 
-                VStack(
-                    alignment: .center,
-                    spacing: 4
-                ) {
-
-                    Text(product.name)
-                        .font(AppTypography.heroTitle)
-                        .foregroundStyle(
-                            AppColors.primaryText
-                        )
-
-                    Text(product.subtitle)
-                        .font(AppTypography.subtitle)
-                        .foregroundStyle(
-                            AppColors.secondaryText
-                        )
-
-                    PriceView(
-                        price: product.basePrice,
-                        prefix: "$"
+                Text(product.name)
+                    .font(AppTypography.heroTitle)
+                    .foregroundStyle(
+                        AppColors.primaryText
                     )
-                }
-
+                
                // Spacer()
+                    .padding(5)
+
+                Text(product.subtitle)
+                    .font(AppTypography.subtitle)
+                    .foregroundStyle(
+                        AppColors.secondaryText
+                    )
+
+                PriceView(
+                    price: product.basePrice,
+                    prefix: "$"
+                )
             }
 
+                .padding(15)
+            
             Button(action: onSelect) {
 
                 Text(product.promotionalText)
@@ -154,5 +161,9 @@ struct ProductHeroView: View {
             }
             .buttonStyle(.plain)
         }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .center
+        )
     }
 }
