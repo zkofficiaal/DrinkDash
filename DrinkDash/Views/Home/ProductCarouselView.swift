@@ -2,7 +2,7 @@
 //  ProductCarouselView.swift
 //  DrinkDash
 //
-//  Created by Z.K   on 16/09/2026.
+//  Created by Z.K  on 16/09/2026.
 //
 
 import SwiftUI
@@ -26,11 +26,20 @@ struct ProductCarouselView: View {
         ZStack {
 
             if let product {
+
+                let nextIndex =
+                    (viewModel.selectedIndex + 1) % viewModel.products.count
+
+                let nextProduct =
+                    viewModel.products[nextIndex]
+
                 ProductHeroView(
                     product: product,
+                    nextProduct: nextProduct,
                     screenSize: screenSize,
                     dragOffset: dragOffset
                 ) {
+
                     onProductSelected(product)
                 }
             }
@@ -57,6 +66,7 @@ struct ProductCarouselView: View {
             if value.translation.width < -threshold {
 
                 withAnimation(AppMotion.carousel) {
+
                     viewModel.moveToNext()
                     dragOffset = 0
                 }
@@ -64,6 +74,7 @@ struct ProductCarouselView: View {
             } else if value.translation.width > threshold {
 
                 withAnimation(AppMotion.carousel) {
+
                     viewModel.moveToPrevious()
                     dragOffset = 0
                 }
@@ -71,6 +82,7 @@ struct ProductCarouselView: View {
             } else {
 
                 withAnimation(AppMotion.carousel) {
+
                     dragOffset = 0
                 }
             }

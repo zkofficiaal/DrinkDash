@@ -2,7 +2,7 @@
 //  ProductHeroView.swift
 //  DrinkDash
 //
-//  Created by Z.K   on 16/09/2026.
+//  Created by Z.K  on 16/09/2026.
 //
 
 import SwiftUI
@@ -12,11 +12,9 @@ import SwiftUI
 struct ProductHeroView: View {
 
     let product: Product
-
+    let nextProduct: Product
     let screenSize: CGSize
-
     let dragOffset: CGFloat
-
     let onSelect: () -> Void
 
     var body: some View {
@@ -38,8 +36,7 @@ struct ProductHeroView: View {
             bottomContent
         }
         .padding(.horizontal, AppSpacing.horizontal)
-        //.padding(.top, AppSpacing.heroTop)
-        .padding(.top, 6)
+        .padding(.top, AppSpacing.heroTop)
         .padding(.bottom, AppSpacing.bottomButton)
     }
 
@@ -69,7 +66,7 @@ struct ProductHeroView: View {
                     )
 
                 ProductImageView(
-                    product: product
+                    product: nextProduct
                 )
                 .frame(
                     width: 50,

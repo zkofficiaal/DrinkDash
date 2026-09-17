@@ -16,7 +16,7 @@ enum AppSpacing {
     static let large: CGFloat = 22
     static let extraLarge: CGFloat = 32
 
-    static let heroTop: CGFloat = 90
+    static let heroTop: CGFloat = 6
     static let heroBottom: CGFloat = 120
 
     static let bottomButton: CGFloat = 24
