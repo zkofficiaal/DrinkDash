@@ -2,7 +2,7 @@
 //  ProductDetailView.swift
 //  DrinkDash
 //
-//  Created by Z.K   on 16/09/2026.
+//  Created by Z.K  on 16/09/2026.
 //
 
 import SwiftUI
@@ -18,6 +18,7 @@ struct ProductDetailView: View {
     @State private var isVisible = false
 
     init(product: Product) {
+
         _viewModel = State(
             initialValue: ProductDetailViewModel(
                 product: product
@@ -45,9 +46,7 @@ struct ProductDetailView: View {
 
                 topBar
 
-                heroArea
-
-                controls
+                detailContent
 
                 Spacer()
 
@@ -67,11 +66,11 @@ struct ProductDetailView: View {
         }
     }
 
+    // MARK: - Top Bar
+
     private var topBar: some View {
 
-        HStack(
-            alignment: .top
-        ) {
+        HStack {
 
             Button {
 
@@ -105,10 +104,47 @@ struct ProductDetailView: View {
             .buttonStyle(.plain)
 
             Spacer()
+        }
+    }
+
+    // MARK: - Detail Content
+
+    private var detailContent: some View {
+
+        GeometryReader { geometry in
+
+            HStack(
+                alignment: .top,
+                spacing: 0
+            ) {
+
+                leftContent
+                    .frame(
+                        width: geometry.size.width * 0.48,
+                        alignment: .topLeading
+                    )
+
+                heroArea
+                    .frame(
+                        width: geometry.size.width * 0.52,
+                        height: geometry.size.height * 0.72
+                    )
+            }
+        }
+    }
+
+    // MARK: - Left Content
+
+    private var leftContent: some View {
+
+        VStack(
+            alignment: .leading,
+            spacing: 0
+        ) {
 
             VStack(
-                alignment: .trailing,
-                spacing: 4
+                alignment: .leading,
+                spacing: 6
             ) {
 
                 Text(viewModel.product.name)
@@ -122,13 +158,31 @@ struct ProductDetailView: View {
                     .foregroundStyle(
                         AppColors.secondaryText
                     )
-                    .multilineTextAlignment(.trailing)
-                    .frame(
-                        maxWidth: 180
-                    )
+                    .multilineTextAlignment(.leading)
             }
+
+            .padding(.top, 12)
+
+            VStack(
+                alignment: .leading,
+                spacing: AppSpacing.large
+            ) {
+
+                SizeSelectorView(
+                    selectedSize: $viewModel.selectedSize
+                )
+
+                QuantitySelectorView(
+                    quantity: $viewModel.quantity,
+                    minimum: viewModel.product.minimumQuantity,
+                    maximum: viewModel.product.maximumQuantity
+                )
+            }
+            .padding(.top, 40)
         }
     }
+
+    // MARK: - Hero Area
 
     private var heroArea: some View {
 
@@ -136,10 +190,8 @@ struct ProductDetailView: View {
             product: viewModel.product
         )
         .frame(
-            maxWidth: .infinity
-        )
-        .frame(
-            height: 270
+            maxWidth: .infinity,
+            maxHeight: .infinity
         )
         .transition(
             .scale.combined(
@@ -148,24 +200,7 @@ struct ProductDetailView: View {
         )
     }
 
-    private var controls: some View {
-
-        VStack(
-            spacing: AppSpacing.large
-        ) {
-
-            SizeSelectorView(
-                selectedSize: $viewModel.selectedSize
-            )
-
-            QuantitySelectorView(
-                quantity: $viewModel.quantity,
-                minimum: viewModel.product.minimumQuantity,
-                maximum: viewModel.product.maximumQuantity
-            )
-        }
-        .padding(.top, 4)
-    }
+    // MARK: - Bottom Action
 
     private var bottomAction: some View {
 
@@ -206,6 +241,7 @@ struct ProductDetailView: View {
                 let order = viewModel.createOrder()
 
                 withAnimation(AppMotion.screenTransition) {
+
                     router.showReceipt(
                         for: order
                     )
@@ -213,6 +249,8 @@ struct ProductDetailView: View {
             }
         }
     }
+
+    // MARK: - Formatted Total
 
     private var formattedTotal: String {
 
