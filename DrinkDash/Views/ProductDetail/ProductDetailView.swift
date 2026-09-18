@@ -113,21 +113,28 @@ struct ProductDetailView: View {
 
         GeometryReader { geometry in
 
-            HStack(
-                alignment: .top,
-                spacing: 0
+            ZStack(
+                alignment: .topLeading
             ) {
 
                 leftContent
                     .frame(
-                        width: geometry.size.width * 0.46,
+                        width: geometry.size.width * 0.52,
                         alignment: .topLeading
                     )
 
                 heroArea
                     .frame(
-                        width: geometry.size.width * 0.54,
-                        height: geometry.size.height * 0.78
+                        width: geometry.size.width * 0.62,
+                        height: geometry.size.height * 0.90
+                    )
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: .topTrailing
+                    )
+                    .offset(
+                        y: geometry.size.height * 0.18
                     )
             }
         }
@@ -153,11 +160,7 @@ struct ProductDetailView: View {
                         AppColors.primaryText
                     )
                     .lineLimit(1)
-                    .minimumScaleFactor(0.65)
-                    .fixedSize(
-                        horizontal: false,
-                        vertical: true
-                    )
+                    .minimumScaleFactor(0.60)
 
                 Text(viewModel.product.description)
                     .font(AppTypography.subtitle)
@@ -166,10 +169,11 @@ struct ProductDetailView: View {
                     )
                     .multilineTextAlignment(.leading)
                     .frame(
-                        maxWidth: 170,
+                        maxWidth: 210,
                         alignment: .leading
                     )
             }
+
             .padding(.top, 12)
 
             VStack(
@@ -187,7 +191,7 @@ struct ProductDetailView: View {
                     maximum: viewModel.product.maximumQuantity
                 )
             }
-            .padding(.top, 40)
+            .padding(.top, 42)
         }
     }
 
@@ -202,10 +206,7 @@ struct ProductDetailView: View {
             maxWidth: .infinity,
             maxHeight: .infinity
         )
-        .scaleEffect(1.55)
-        .offset(
-            y: 45
-        )
+        .scaleEffect(1.35)
         .transition(
             .scale.combined(
                 with: .opacity
