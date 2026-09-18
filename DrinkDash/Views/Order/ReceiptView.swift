@@ -2,7 +2,7 @@
 //  ReceiptView.swift
 //  DrinkDash
 //
-//  Created by Z.K   on 16/09/2026.
+//  Created by Z.K  on 16/09/2026.
 //
 
 import SwiftUI
@@ -11,6 +11,8 @@ import SwiftUI
 
 struct ReceiptView: View {
 
+    @Environment(AppRouter.self) private var router
+
     let order: Order
 
     @Bindable var viewModel: OrderViewModel
@@ -18,12 +20,11 @@ struct ReceiptView: View {
     var body: some View {
 
         GeometryReader { geometry in
-            VStack{
-                
-                
-                
+
+            VStack {
+
                 ZStack {
-                    
+
                     ReceiptShape(
                         toothWidth: 12,
                         toothHeight: 8
@@ -33,12 +34,12 @@ struct ReceiptView: View {
                     )
                     .frame(
                         width: min(
-                            geometry.size.width * 0.72,
-                            320
+                            geometry.size.width * 0.68,
+                            300
                         ),
                         height: min(
-                            geometry.size.height * 0.70,
-                            560
+                            geometry.size.height * 0.66,
+                            530
                         )
                     )
                     .shadow(
@@ -56,7 +57,7 @@ struct ReceiptView: View {
                         ? 1
                         : 0
                     )
-                    
+
                     receiptContent
                 }
                 .frame(
@@ -67,6 +68,8 @@ struct ReceiptView: View {
         }
     }
 
+    // MARK: - Receipt Content
+
     private var receiptContent: some View {
 
         VStack(
@@ -74,15 +77,18 @@ struct ReceiptView: View {
         ) {
 
             Spacer(
-                minLength: 24
+                minLength: 20
             )
 
             if viewModel.isHeaderVisible {
 
-                Text("ORDER SENT")
-                    .font(AppTypography.sectionLabel)
+                Text("RECEIPT")
+                    .font(
+                        AppTypography.receiptTitle
+                    )
                     .foregroundStyle(
-                        .white                    )
+                        .white
+                    )
                     .transition(
                         .move(
                             edge: .bottom
@@ -94,15 +100,15 @@ struct ReceiptView: View {
             }
 
             Spacer(
-                minLength: 20
+                minLength: 16
             )
 
             if viewModel.isProductVisible {
-                
-               // Text("DevTechZahid")
 
                 Text(order.item.product.name)
-                    .font(AppTypography.receiptTitle)
+                    .font(
+                        AppTypography.receiptTitle
+                    )
                     .foregroundStyle(
                         AppColors.primaryText
                     )
@@ -117,7 +123,7 @@ struct ReceiptView: View {
             }
 
             Spacer(
-                minLength: 20
+                minLength: 16
             )
 
             if viewModel.isDetailsVisible {
@@ -153,7 +159,7 @@ struct ReceiptView: View {
             }
 
             Spacer(
-                minLength: 22
+                minLength: 18
             )
 
             if viewModel.isTotalVisible {
@@ -182,12 +188,16 @@ struct ReceiptView: View {
                         AppColors.primaryText
                     )
                     .padding(12)
-                    
+
                     Text("Developed by:")
-                        .font(AppTypography.subtitle)
-                    
+                        .font(
+                            AppTypography.subtitle
+                        )
+
                     Text("DevTechZahid")
-                        .font(AppTypography.devtechzahidTitle)
+                        .font(
+                            AppTypography.devtechzahidTitle
+                        )
                 }
                 .transition(
                     .scale.combined(
@@ -197,31 +207,59 @@ struct ReceiptView: View {
             }
 
             Spacer(
-                minLength: 22
+                minLength: 18
             )
 
-            if viewModel.isThankYouVisible {
+//            if viewModel.isThankYouVisible {
+//
+//                Text("Thank you")
+//                    .font(
+//                        AppTypography.receiptBody
+//                    )
+//                    .foregroundStyle(
+//                        .white
+//                    )
+//                    .transition(
+//                        .scale.combined(
+//                            with: .opacity
+//                        )
+//                    )
+//            }
+//
+//            Spacer(
+//                minLength: 18
+//            )
 
-                Text("Thank you")
-                    .font(
-                        AppTypography.receiptBody
+           
+            // MARK: - Place Another Order
+
+            if viewModel.isThankYouVisible {
+                PrimaryButton(
+                    title: "Place Another Order"
+                ) {
+                    withAnimation(
+                        AppMotion.screenTransition
+                    ) {
+                        router.showHome()
+                    }
+                }
+                .transition(
+                    .move(
+                        edge: .bottom
                     )
-                    .foregroundStyle(
-                        .white
+                    .combined(
+                        with: .opacity
                     )
-                    .transition(
-                        .scale.combined(
-                            with: .opacity
-                        )
-                    )
+                )
             }
+            
 
             Spacer(
-                minLength: 45
+                minLength: 28
             )
         }
         .frame(
-            width: 230
+            width: 210
         )
         .animation(
             AppMotion.standard,
@@ -244,6 +282,8 @@ struct ReceiptView: View {
             value: viewModel.isThankYouVisible
         )
     }
+
+    // MARK: - Receipt Row
 
     private func receiptRow(
         title: String,
@@ -271,6 +311,8 @@ struct ReceiptView: View {
                 )
         }
     }
+
+    // MARK: - Currency Formatting
 
     private func formatted(
         _ value: Decimal
