@@ -17,16 +17,19 @@ enum PreviewData {
             description: "Berry, creamy and refreshing.",
             imageName: "cosmberry",
             thumbnailImageName: "cosmberry",
+
             backgroundTop: Color(
-                red: 0.73,
-                green: 0.61,
-                blue: 0.80
+                red: 0.82,
+                green: 0.52,
+                blue: 0.55
             ),
+
             backgroundBottom: Color(
-                red: 0.87,
-                green: 0.77,
-                blue: 0.88
+                red: 0.92,
+                green: 0.68,
+                blue: 0.70
             ),
+
             basePrice: 13.50,
             promotionalText: "BUY 1 GET 1 FREE",
             sizePrices: [

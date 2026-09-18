@@ -82,8 +82,7 @@ struct ReceiptView: View {
                 Text("ORDER SENT")
                     .font(AppTypography.sectionLabel)
                     .foregroundStyle(
-                        AppColors.secondaryText
-                    )
+                        .white                    )
                     .transition(
                         .move(
                             edge: .bottom
@@ -208,7 +207,7 @@ struct ReceiptView: View {
                         AppTypography.receiptBody
                     )
                     .foregroundStyle(
-                        AppColors.secondaryText
+                        .white
                     )
                     .transition(
                         .scale.combined(
