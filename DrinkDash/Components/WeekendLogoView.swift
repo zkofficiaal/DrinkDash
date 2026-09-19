@@ -10,10 +10,10 @@ import SwiftUI
 struct WeekendLogoView: View {
 
     var body: some View {
-        Text("Weekend")
+        Text("DrinkDash")
             .font(AppTypography.weekend)
             .italic()
             .foregroundStyle(AppColors.primaryText)
-            .accessibilityLabel("Weekend")
+            .accessibilityLabel("DrinkDash")
     }
 }
