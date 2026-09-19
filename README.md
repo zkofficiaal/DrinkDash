@@ -30,7 +30,7 @@ The project was built with a modular structure using **MVVM**, reusable SwiftUI 
 
 ---
 
-## 📱 App Flow
+## App Flow
 
 ```text
 Home
@@ -257,7 +257,7 @@ The receipt is progressively revealed using individual visibility states, creati
 
 ---
 
-## 🧩 Reusable Components
+## Reusable Components
 
 DrinkDash separates repeated UI elements into reusable SwiftUI components.
 
@@ -301,24 +301,6 @@ The final order contains information such as:
 * Unit price
 * Total
 * Creation date
-
----
-
-## 🧭 Navigation
-
-DrinkDash uses a centralized routing approach.
-
-Main application destinations include:
-
-```swift
-enum AppScreen {
-    case home
-    case productDetail(Product)
-    case receipt(Order)
-}
-```
-
-This keeps navigation state separate from individual screen implementations.
 
 ---
 
@@ -371,8 +353,7 @@ Possible future improvements include:
 
 ## Developer
 
-**DevTechZahid**
+**DevTechZahid (Muhammad Zahid Khan )**
 
 Built with SwiftUI and a focus on clean architecture, reusable components, modern UI design, and smooth interactions.
 
----
